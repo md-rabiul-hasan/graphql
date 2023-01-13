@@ -1,33 +1,29 @@
 const express         = require('express');
 const { graphqlHTTP } = require('express-graphql');
 const { buildSchema } = require('graphql');
+const userData = require("./userData.json");
 
 const app = express();
 
 var schema = buildSchema(`
     type Person {
+        id: Int,
         name: String,
         email: String
     }
 
-    type Developer {
-        profile: Person,
-        experience: Int
-    }
-
     type Query {
-        name: String,
-        developer: Developer
+        users: [Person]
+        user(id: Int): Person
     }
 `);
 
 var root = {
-    name: () => {
-        return 'Rabiul Hasan'
-    },
-    developer: () => {
-        return { profile: { name: "Rabiul Hasan", email: "rhasan.fci@gmail.com"}, experience: 3}
+    users: () => userData,
+    user: ({id}) => {
+        return userData.find(user => user.id === id)
     }
+
 }
 
 app.use('/graphql', graphqlHTTP({
@@ -38,4 +34,3 @@ app.use('/graphql', graphqlHTTP({
 app.listen(8000);
 
 console.log('app is running')
-
