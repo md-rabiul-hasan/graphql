@@ -63,5 +63,17 @@
         },
         "actor": "Robert Pattinson",
         "image": "http://hp-api.herokuapp.com/images/cedric.png"
+    },
+    {
+        "id": 6,
+        "name": "Elfrick the Eager",
+        "species": "goblin",
+        "gender": "male"
+    },
+    {
+        "id": 7,
+        "name": "Norberta",
+        "species": "dragon",
+        "gender": "female"
     }
 ]

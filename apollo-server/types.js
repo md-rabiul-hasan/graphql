@@ -1,6 +1,13 @@
 const { gql } = require('apollo-server');
 
 const types = gql`
+
+interface Character {
+    id: ID!
+    name: String
+    gender: GENDER
+}
+
 type Wand {
     wood: String !
     core: String !
@@ -12,8 +19,8 @@ enum GENDER {
     female
 }
 
-type Character {
-    id: ID
+type Human implements Character {
+    id: ID!
     name: String
     gender: GENDER
     dateOfBirth: String
@@ -22,8 +29,16 @@ type Character {
     image: String
 }
 
+type NonHuman implements Character {
+    id: ID!
+    name: String
+    gender: GENDER
+    species: String
+}
+
 type Query {
-    characters: [Character]
+    humans: [Human]
+    nonHumans: [NonHuman]
 }
 `;
 
