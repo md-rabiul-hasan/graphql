@@ -5,7 +5,10 @@ const userData = require("./userData.json");
 
 const app = express();
 
-let fakeDb = {};
+let fakeDb = [
+    { id: 1, name: "Office", rent: "$5" },
+    { id: 2, name: "co-worker", rent: "$15" },
+];
 
 var schema = buildSchema(`
     type Person {
@@ -14,14 +17,21 @@ var schema = buildSchema(`
         email: String
     }
 
+    type Space {
+        name: String
+        rent: String
+    }
+
     type Query {
         users: [Person]
         user(id: Int): Person,
-        getMessage: String
+        getMessage: String,
+        getSpace(id: ID!): Space !
     }
 
     type Mutation {
-        addMessage(msg: String): String
+        addMessage(msg: String): String,
+        createSpace(name: String, rent: String): Space
     }
 `);
 
@@ -33,7 +43,12 @@ var root = {
     addMessage: ({ msg }) => (fakeDb.message = msg),
     getMessage: () => {
         return fakeDb.message
-    }
+    },
+    createSpace: ({ name, rent}) => (fakeDb[fakeDb.length] = {id: 3, name:name, rent:rent }),
+    getSpace: ({id}) => {
+        console.log(fakeDb.find((space) => space.id == id));
+        return fakeDb.find((space) => space.id === id)
+    } 
 
 }
 
