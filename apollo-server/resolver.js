@@ -31,6 +31,9 @@ const resolvers = {
         humans(parent) {
             return characterData.filter(character => !(character.species));
         },
+        human(_, {id}) {
+            return characterData.find(item => parseInt(item.id) === parseInt(id));
+        },
         nonHumans() {
             return characterData.filter(character => character.species);
         },
