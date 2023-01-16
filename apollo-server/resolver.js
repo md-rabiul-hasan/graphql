@@ -39,6 +39,14 @@ const resolvers = {
         characters(_, __, { characters }) {
             return characters;
         }
+    },
+
+    Mutation: {
+        addCharacter(_, {data}, {characters}) {
+            let character = {id: characters.length + 1, ...data};
+            characters.push(character);
+            return data;
+        }
     }
 }
 
