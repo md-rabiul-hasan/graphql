@@ -5,6 +5,8 @@ const userData = require("./userData.json");
 
 const app = express();
 
+let fakeDb = {};
+
 var schema = buildSchema(`
     type Person {
         id: Int,
@@ -14,7 +16,12 @@ var schema = buildSchema(`
 
     type Query {
         users: [Person]
-        user(id: Int): Person
+        user(id: Int): Person,
+        getMessage: String
+    }
+
+    type Mutation {
+        addMessage(msg: String): String
     }
 `);
 
@@ -22,6 +29,10 @@ var root = {
     users: () => userData,
     user: ({id}) => {
         return userData.find(user => user.id === id)
+    },
+    addMessage: ({ msg }) => (fakeDb.message = msg),
+    getMessage: () => {
+        return fakeDb.message
     }
 
 }
