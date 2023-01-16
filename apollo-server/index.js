@@ -1,31 +1,38 @@
 const { ApolloServer, gql } = require('apollo-server');
+const characterData = require('./harrypotter.json');
 
-const books = [
-    {
-        title: "The Awakening",
-        author: "Kate Chopin",
-    },
-    {
-        title: "City of Glass",
-        author: "Paul Auster",
-    },
-];
 
 const types = gql`
-    type Book {
-        title: String
-        author: String
+    type Wand {
+        wood: String !
+        core: String !
+        length: Float
+    }
+    
+    enum GENDER {
+        male
+        female
+    }
+
+    type Character {
+        id: ID
+        name: String
+        gender: GENDER
+        dateOfBirth: String
+        actor: String
+        wand: Wand
+        image: String
     }
 
     type Query {
-        books: [Book]
+        characters: [Character]
     }
 `;
 
 const resolvers = {
     Query: {
-        books() {
-            return books;
+        characters() {
+            return characterData;
         }
     }
 }
