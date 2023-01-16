@@ -39,6 +39,7 @@ type NonHuman implements Character {
 type Query {
     humans: [Human]
     nonHumans: [NonHuman]
+    characters: [Character!]!
 }
 `;
 
